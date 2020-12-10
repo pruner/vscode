@@ -1,6 +1,6 @@
 import {workspace, WorkspaceFolder} from "vscode";
 
-import { allProviderClasses, pruner } from '@pruner/cli';
+import { io, pruner } from '@pruner/cli';
 import _ from "lodash";
 
 export async function getNormalizedWorkspacePaths() {
@@ -11,7 +11,7 @@ export async function getNormalizedWorkspacePaths() {
 }
 
 export async function getStatesInWorkspace() {
-    const allProviderNames = allProviderClasses.map(x => x.name);
+    const settings = pruner.readSettings(folder.uri.fsPath);
 
     const allStates = await Promise.all(_.flatMap(
         workspace.workspaceFolders || new Array<WorkspaceFolder>(),

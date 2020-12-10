@@ -4,6 +4,7 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
+			"label": "Start watch mode",
 			"type": "npm",
 			"script": "watch",
 			"problemMatcher": [
@@ -14,6 +15,7 @@
 			"presentation": {
 				"reveal": "never"
 			},
+			"dependsOn": ["Initialize empty Pruner repository"],
 			"group": {
 				"kind": "build",
 				"isDefault": true
@@ -28,6 +30,12 @@
 				"reveal": "never"
 			},
 			"group": "build"
+		},
+		{
+			"label": "Initialize empty Pruner repository",
+			"type": "shell",
+			"command": "cd \"${workspaceFolder}/../\" && ((rmdir /s /q \"pruner.fresh\" && git clone https://github.com/pruner/sample pruner.fresh) || git clone https://github.com/pruner/sample pruner.fresh) && cd \"pruner.fresh\" && node \"${workspaceFolder}/node_modules/@pruner/cli/bin/pruner\" run",
+			"problemMatcher": []
 		}
 	]
 }

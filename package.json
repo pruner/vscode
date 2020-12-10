@@ -10,7 +10,7 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:pruner.helloWorld"
+		"workspaceContains:**/.pruner/"
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
@@ -50,7 +50,7 @@
 		"webpack-cli": "^3.3.12"
 	},
 	"dependencies": {
-		"@pruner/cli": "^1.0.38",
+		"@pruner/cli": "^1.0.44",
 		"lodash": "^4.17.20"
 	}
 }
