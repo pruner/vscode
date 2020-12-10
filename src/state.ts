@@ -2,23 +2,29 @@ import {workspace, WorkspaceFolder} from "vscode";
 
 import { io, pruner } from '@pruner/cli';
 import _ from "lodash";
+import { ProviderState } from "@pruner/cli/dist/src/providers/types";
 
-export async function getNormalizedWorkspacePaths() {
-    if(!workspace.workspaceFolders)
-        return [];
+let currentStates: Promise<ProviderState[]>;
 
-    
-}
+export async function getStatesInWorkspace(cacheMode: "cached" | "fresh" = "fresh") {
+    if(currentStates && cacheMode === "cached") {
+        return await currentStates;
+    }
 
-export async function getStatesInWorkspace() {
-    const settings = pruner.readSettings(folder.uri.fsPath);
+    currentStates = (async () => _.flatMap(
+        await Promise.all(_.flatMap(
+            workspace.workspaceFolders || new Array<WorkspaceFolder>(),
+            async folder => {
+                const settings = await pruner.readSettings(folder.uri.fsPath);
+                if(!settings) {
+                    return [];
+                }
 
-    const allStates = await Promise.all(_.flatMap(
-        workspace.workspaceFolders || new Array<WorkspaceFolder>(),
-        folder => allProviderNames
-            .map(async providerName => await pruner.readState(
-                providerName, 
-                folder.uri.fsPath))));
+                return await Promise.all(settings
+                    .providers
+                    .map(async provider => 
+                        await pruner.readState(provider.id, folder.uri.fsPath)));
+            }))))();
 
-    return allStates;
+    return currentStates;
 }
