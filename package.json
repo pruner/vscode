@@ -1,8 +1,8 @@
 {
-	"name": "pruner",
-	"displayName": "Pruner",
+	"name": "vscode",
+	"displayName": "Pruner: Coverage Gutters",
 	"publisher": "Pruner",
-	"description": "",
+	"description": "Coverage gutters for test projects that are run via Pruner.",
 	"version": "1.0.0",
 	"engines": {
 		"vscode": "^1.51.0"
@@ -16,16 +16,10 @@
 	],
 	"main": "./dist/extension.js",
 	"contributes": {
-		"commands": [
-			{
-				"command": "pruner.helloWorld",
-				"title": "Hello World"
-			}
-		]
 	},
 	"icon": "resources/icon.png",
 	"scripts": {
-		"vscode:prepublish": "npm run package",
+		"vscode:prepublish": "npm run build && npm run package",
 		"compile": "webpack --devtool nosources-source-map --config ./build/node-extension.webpack.config.js",
 		"watch": "webpack --watch --devtool nosources-source-map --info-verbosity verbose --config ./build/node-extension.webpack.config.js",
 		"package": "webpack --mode production --config ./build/node-extension.webpack.config.js",
