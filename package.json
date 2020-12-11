@@ -3,7 +3,7 @@
 	"displayName": "Pruner: Coverage Gutters",
 	"publisher": "Pruner",
 	"description": "Coverage gutters for test projects that are run via Pruner.",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"engines": {
 		"vscode": "^1.51.0"
 	},
