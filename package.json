@@ -1,12 +1,14 @@
 {
 	"name": "pruner",
 	"displayName": "Pruner",
+	"publisher": "pruner",
 	"description": "",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.51.0"
 	},
 	"categories": [
+		"Visualization",
 		"Other"
 	],
 	"activationEvents": [
@@ -21,6 +23,7 @@
 			}
 		]
 	},
+	"icon": "resources/icon.png",
 	"scripts": {
 		"vscode:prepublish": "npm run package",
 		"compile": "webpack --devtool nosources-source-map --config ./build/node-extension.webpack.config.js",
