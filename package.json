@@ -3,7 +3,7 @@
 	"displayName": "Pruner: Coverage Gutters",
 	"publisher": "Pruner",
 	"description": "Coverage gutters for test projects that are run via Pruner.",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"engines": {
 		"vscode": "^1.51.0"
 	},
@@ -14,6 +14,7 @@
 	"activationEvents": [
 		"workspaceContains:**/.pruner/"
 	],
+	"repository": "https://github.com/pruner/vscode",
 	"main": "./dist/extension.js",
 	"contributes": {
 	},
