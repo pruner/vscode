@@ -8,7 +8,8 @@ import { clearRenderedCoverage, renderCoverage } from './render';
 export async function activate(context: vscode.ExtensionContext) {
     const baseOptions: vscode.DecorationRenderOptions = {
         isWholeLine: true,
-        gutterIconSize: "contain"
+		gutterIconSize: "contain",
+		rangeBehavior: vscode.DecorationRangeBehavior.ClosedClosed
     };
 
     const succeededType = vscode.window.createTextEditorDecorationType({
@@ -25,16 +26,16 @@ export async function activate(context: vscode.ExtensionContext) {
 	});
 	context.subscriptions.push(failedType);
 
-	const onRender = () => 
-		renderCoverage(context, failedType, succeededType);
-	
+	const onRender = async () => 
+		await renderCoverage(context, failedType, succeededType);
+
 	const watcher = vscode.workspace.createFileSystemWatcher('**/.pruner/state/*', false, false, false);
 	context.subscriptions.push(watcher.onDidChange(onRender));
 	context.subscriptions.push(watcher.onDidCreate(onRender));
 	context.subscriptions.push(watcher.onDidDelete(onRender));
 	context.subscriptions.push(watcher);
 
-	const onDidChangeActiveTextEditor = vscode.window.onDidChangeActiveTextEditor(onRender);
+	const onDidChangeActiveTextEditor = vscode.window.onDidChangeActiveTextEditor(clearRenderedCoverage);
 	context.subscriptions.push(onDidChangeActiveTextEditor);
 
 	await onRender();
