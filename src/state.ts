@@ -4,10 +4,14 @@ import { io, pruner } from '@pruner/cli';
 import _ from "lodash";
 import { ProviderState } from "@pruner/cli/dist/src/providers/types";
 
-let currentStates: Promise<ProviderState[]>;
+let currentStates: Promise<ProviderState[]> | null = null;
 
-export async function getStatesInWorkspace(cacheMode: "cached" | "fresh" = "fresh") {
-    if(currentStates && cacheMode === "cached") {
+export function resetStateCache() {
+    currentStates = null;
+}
+
+export async function getStatesInWorkspace() {
+    if(currentStates) {
         return await currentStates;
     }
 

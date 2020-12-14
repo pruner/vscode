@@ -2,6 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import { clearRenderedCoverage, renderCoverage } from './render';
+import { resetStateCache } from './state';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -29,13 +30,21 @@ export async function activate(context: vscode.ExtensionContext) {
 	const onRender = async () => 
 		await renderCoverage(context, failedType, succeededType);
 
+	const onStateChange = async () => {
+		resetStateCache();
+		await onRender();
+	};
+
 	const watcher = vscode.workspace.createFileSystemWatcher('**/.pruner/state/*', false, false, false);
-	context.subscriptions.push(watcher.onDidChange(onRender));
-	context.subscriptions.push(watcher.onDidCreate(onRender));
-	context.subscriptions.push(watcher.onDidDelete(onRender));
+	context.subscriptions.push(watcher.onDidChange(onStateChange));
+	context.subscriptions.push(watcher.onDidCreate(onStateChange));
+	context.subscriptions.push(watcher.onDidDelete(onStateChange));
 	context.subscriptions.push(watcher);
 
-	const onDidChangeActiveTextEditor = vscode.window.onDidChangeActiveTextEditor(clearRenderedCoverage);
+	const onDidChangeActiveTextEditor = vscode.window.onDidChangeActiveTextEditor(async () => {
+		await clearRenderedCoverage();
+		await onRender();
+	});
 	context.subscriptions.push(onDidChangeActiveTextEditor);
 
 	await onRender();
