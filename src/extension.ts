@@ -27,11 +27,17 @@ export async function activate(context: vscode.ExtensionContext) {
 	});
 	context.subscriptions.push(failedType);
 
+	const logChannel = vscode.window.createOutputChannel("Pruner");
+	context.subscriptions.push(logChannel);
+
 	const onRender = async () => 
-		await renderCoverage(context, failedType, succeededType);
+		await renderCoverage(
+			failedType, 
+			succeededType, 
+			logChannel);
 
 	const onStateChange = async () => {
-		resetStateCache();
+		resetStateCache(logChannel);
 		await onRender();
 	};
 

@@ -5,24 +5,29 @@ import * as vscode from 'vscode';
 import { getStatesInWorkspace } from "./state";
 
 export async function renderCoverage(
-    context: vscode.ExtensionContext,
     failedType: vscode.TextEditorDecorationType,
-    succeededType: vscode.TextEditorDecorationType) 
+    succeededType: vscode.TextEditorDecorationType,
+    logChannel: vscode.OutputChannel) 
 {
     const activeEditor = vscode.window.activeTextEditor;
     if(!activeEditor) {
+        logChannel.appendLine("No active editor found.");
         return;
     }
 
     const states = await getStatesInWorkspace();
+    const editorPath = io.normalizePathSeparators(activeEditor.document.uri.fsPath);
+    logChannel.appendLine(`Scanning for coverage for path ${editorPath}`);
+
     const file = _
         .flatMap(states, x => x.files)
-        .find(f => io
-            .normalizePathSeparators(activeEditor.document.uri.fsPath)
-            .endsWith(f.path));
+        .find(f => editorPath.endsWith(f.path));
     if(!file) {
+        logChannel.appendLine("No file found for current editor file path.");
         return;
     }
+
+    logChannel.appendLine(`Coverage found under file ID ${file.id}`);
 
     const tests = _.flatMap(states, x => x.tests);
 
