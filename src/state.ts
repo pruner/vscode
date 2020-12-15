@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 
-import { io, pruner } from '@pruner/cli';
+import { pruner } from '@pruner/cli';
 import _ from "lodash";
 import { ProviderState } from "@pruner/cli/dist/src/providers/types";
 

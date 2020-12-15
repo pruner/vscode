@@ -40,7 +40,7 @@ export async function renderCoverage(
 
     for(let lineCoverage of coverageForFile) {
         const lineTests = tests.filter(t => lineCoverage.testIds.find(i => i === t.id));
-        const failed = lineTests.find(x => !x.passed);
+        const failed = lineTests.find(x => !!x.failure);
         
         const targetArray = failed ?
             failedRanges :
