@@ -48,7 +48,7 @@
 		"webpack-cli": "^3.3.12"
 	},
 	"dependencies": {
-		"@pruner/cli": "^1.0.54",
+		"@pruner/cli": "^1.0.58",
 		"lodash": "^4.17.20"
 	}
 }
