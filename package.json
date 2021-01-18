@@ -3,7 +3,7 @@
 	"displayName": "Pruner: Coverage Gutters",
 	"publisher": "Pruner",
 	"description": "Coverage gutters for test projects that are run via Pruner.",
-	"version": "1.0.5",
+	"version": "2.0.0",
 	"engines": {
 		"vscode": "^1.51.0"
 	},
@@ -48,7 +48,7 @@
 		"webpack-cli": "^3.3.12"
 	},
 	"dependencies": {
-		"@pruner/cli": "^1.0.54",
+		"@pruner/cli": "^1.0.73",
 		"lodash": "^4.17.20"
 	}
 }
