@@ -49,6 +49,6 @@
 	},
 	"dependencies": {
 		"@pruner/cli": "^1.0.73",
-		"lodash": "^4.17.20"
+		"lodash": "^4.17.21"
 	}
 }
